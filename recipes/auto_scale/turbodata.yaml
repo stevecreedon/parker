@@ -1,0 +1,13 @@
+:configuration:  
+  :id: turbodata
+  :image_id: ami-9f8be8f6
+  :instance_type: m1.large
+
+:group:
+  :id: turbodata,
+  :availability_zones:
+    - us-east-1d
+  :min_size: 0
+  :max_size: 10
+  :desired_capacity: 0
+  

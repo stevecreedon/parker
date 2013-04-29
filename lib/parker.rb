@@ -1,5 +1,11 @@
 require "parker/version"
 
+require 'parker/connection'
+require 'parker/tasks'
+
+
 module Parker
-  # Your code goes here...
+
+
+
 end
