@@ -1,12 +1,12 @@
 module Parker
 
- def self.load(name)
-   file = File.open(File.join("user_data", name),"r")
-   file.gets
+ def self._load(name)
+   load File.join("user_data", "#{name}.rb")
  end
 
  def self.user_data(name, domain, host)
-   load(name).gsub("__DOMAIN__", domain).gsub("__HOSTNAME__", host)
+   _load(name)
+   ::USER_DATA.gsub("__DOMAIN__", domain).gsub("__HOSTNAME__", host)
  end
 
 end

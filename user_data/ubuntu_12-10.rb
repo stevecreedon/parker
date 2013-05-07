@@ -1,3 +1,8 @@
+USER_DATA = <<USER_DATA
+#!/bin/bash
+
+exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+
 sudo apt-get -y update
 sudo apt-get -y install build-essential zlib1g-dev libssl-dev libreadline6-dev libyaml-dev git-core
 cd /tmp
@@ -51,5 +56,7 @@ ff00::0 ip6-mcastprefix
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 ff02::3 ip6-allhosts
+EOF
 
-
+sudo puppet-apply
+USER_DATA

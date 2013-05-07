@@ -1,4 +1,5 @@
 require_relative '../dns/zones'
+require_relative '../dns/recordset'
 require_relative 'servers'
 
 ARGV.shift
@@ -19,10 +20,6 @@ server.wait_for { print "."; ready? }
 #puts server.inspect
 #puts zone.records.inspect
 
-zone.records.each do |record|
-  if record.name =~ Regexp.compile("#{server.tags["Name"]}\.")
-    record.modify(value: [server.dns_name])
-  end
-end
+Parker::Dns::Recordset.set(zone, server)
 
 

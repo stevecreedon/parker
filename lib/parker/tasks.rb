@@ -1,3 +1,4 @@
+require 'rake'
 
 namespace :parker do
 
@@ -30,6 +31,15 @@ namespace :parker do
       Parker.connect! args[:account]
       require_relative 'auto_scale/auto_scale'
       puts Parker::AutoScale.list.inspect
+    end
+
+    desc "list the existing auto scale groups"
+    task :inspect, [:account] do |t, args|
+      Parker.connect! args[:account]
+      puts "Groups:"
+      puts Parker.connection.auto_scale.groups.inspect
+      puts "Configurations:"
+      puts Parker.connection.auto_scale.configurations.inspect
     end
 
     desc "create the autoscale group with the specified [account]"

@@ -2,6 +2,7 @@ require_relative 'user_data'
 require_relative 'flavours'
 require_relative 'recipes'
 require_relative '../dns/zones'
+require_relative '../dns/recordset'
 
 ARGV.shift
 
@@ -34,6 +35,10 @@ confirm = gets.chomp
 
 #return unless confirm == 'yes'
 
+puts recipe[:server].merge(:user_data => Parker.user_data("ubuntu_12-10", zone.domain, host), 
+                                                                        :tags => {"Name" => host}, 
+                                                                        :flavor_id=> flavour).inspect 
+
 server = Parker.connection.compute.servers.create(recipe[:server].merge(:user_data => Parker.user_data("ubuntu_12-10", zone.domain, host), 
                                                                         :tags => {"Name" => host}, 
                                                                         :flavor_id=> flavour))
@@ -43,12 +48,7 @@ server.wait_for { print "."; ready? }
 
 server.volumes.create(recipe[:volume].merge(tags: {"Name" => host}, size: size, region: server.availability_zone))
 
-zone.records.create(
-  :value   => server.dns_name,
-  :name => "#{host}.#{zone.domain}",
-  :type => 'CNAME'
-)
-
+Parker::Dns::Recordset.set(zone, server)
 
 
 
