@@ -38,6 +38,10 @@ module Parker
       @cdn ||= Fog::CDN.new({provider: 'AWS'}.merge(credentials))
     end
 
+    def cloudwatch
+      @cdn ||= Fog::AWS::CloudWatch.new(credentials)
+    end
+
     def credentials
       @credentials ||= _credentials(account)
     end

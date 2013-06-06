@@ -40,6 +40,10 @@ namespace :parker do
       puts Parker.connection.auto_scale.groups.inspect
       puts "Configurations:"
       puts Parker.connection.auto_scale.configurations.inspect
+      puts "Policies:"
+      Parker.connection.auto_scale.policies.each do |policy|
+        puts policy.inspect
+      end    
     end
 
     desc "create the autoscale group with the specified [account]"

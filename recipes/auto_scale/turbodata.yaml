@@ -1,13 +1,64 @@
 :configuration:  
   :id: turbodata
-  :image_id: ami-9b016cf2
+  :image_id: ami-6bc5ab02 
   :instance_type: m1.large
 
 :group:
-  :id: turbodata,
+  :id: turbodata
   :availability_zones:
-    - us-east-1d
+    - us-east-1c
   :min_size: 0
   :max_size: 10
   :desired_capacity: 0
-  
+ 
+:scale_up_policy:
+  :policy_name: turbodata-up
+  :adjustment_type: ChangeInCapacity
+  :group_name: turbodata
+  :adjustment: 3
+  :cooldown: 30
+ 
+:scale_down_policy:
+  :policy_name: turbodata-down
+  :adjustment_type: ChangeInCapacity
+  :group_name: turbodata 
+  :adjustment: -3
+  :cooldown: 30
+
+:scale_up_alarms:
+  - :alarm_name: cpu_upper
+    :comparison_operator: GreaterThanOrEqualToThreshold
+    :evaluation_periods: 1
+    :metric_name: CPUUtilization
+    :period: 60
+    :threshold: 40.0
+    :statistic: Average
+    :namespace: AWS/EC2
+    :dimensions:
+      - Name: AutoScalingGroupName
+        Value: turbodata
+  - :alarm_name: net_upper
+    :comparison_operator: GreaterThanOrEqualToThreshold
+    :evaluation_periods: 1
+    :metric_name: NetworkIn
+    :period: 60
+    :threshold: 25000000
+    :statistic: Average
+    :namespace: AWS/EC2
+    :dimensions:
+      - Name: AutoScalingGroupName
+        Value: turbodata
+
+
+:scale_down_alarms:
+  - alarm_name: cpu_lower
+    :comparison_operator: LessThanOrEqualToThreshold
+    :evaluation_periods: 1
+    :metric_name: CPUUtilization
+    :period: 60
+    :threshold: 10.0
+    :statistic: Average
+    :namespace: AWS/EC2
+    :dimensions:
+      - Name: AutoScalingGroupName
+        Value: turbodata
