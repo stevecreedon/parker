@@ -35,12 +35,12 @@ confirm = gets.chomp
 
 #return unless confirm == 'yes'
 
-puts recipe[:server].merge(:user_data => Parker.user_data("ubuntu_12-10", zone.domain, host), 
-                                                                        :tags => {"Name" => host}, 
-                                                                        :flavor_id=> flavour).inspect 
+puts recipe[:server].merge(:user_data => Parker.user_data("ubuntu_12-10", zone.domain, host),
+                                                                        :tags => {"Name" => host},
+                                                                        :flavor_id=> flavour).inspect
 
-server = Parker.connection.compute.servers.create(recipe[:server].merge(:user_data => Parker.user_data("ubuntu_12-10", zone.domain, host), 
-                                                                        :tags => {"Name" => host}, 
+server = Parker.connection.compute.servers.create(recipe[:server].merge(:user_data => Parker.user_data("ubuntu_12-10", zone.domain, host),
+                                                                        :tags => {"Name" => host},
                                                                         :flavor_id=> flavour))
 
 # wait for it to get online

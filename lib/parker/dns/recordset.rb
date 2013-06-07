@@ -12,7 +12,7 @@ module Parker
 
         zone.records.create(
           :value   => server.dns_name,
-          :name => "#{host}.#{zone.domain}",
+          :name => "#{server.tags['Name']}.#{zone.domain}",
           :type => 'CNAME'
         )
       end

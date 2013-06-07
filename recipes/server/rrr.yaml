@@ -1,0 +1,15 @@
+:name: 'rrr'
+
+:server:
+  :image_id: 'ami-7539b41c'
+  :key_name: 'ivan_turbo_seeder'
+  :groups: 'turboseeder'
+
+:volume:
+  :delete_on_termination: true
+  :device: "/dev/sdf"
+  :size: 100
+  :type: "standard"
+
+
+

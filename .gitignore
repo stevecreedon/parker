@@ -3,6 +3,8 @@
 .bundle
 .config
 .yardoc
+.rvmrc
+*.swp
 Gemfile.lock
 InstalledFiles
 _yardoc
