@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Parker::VERSION
   gem.authors       = ["stevecreedon"]
   gem.email         = ["steve@creedon.me"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Write a gem description}
+  gem.summary       = %q{Write a gem summary}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
