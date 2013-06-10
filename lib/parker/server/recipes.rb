@@ -1,21 +1,40 @@
-module Parker 
+module Parker
   module Server
-    module Recipes  
+    module Recipes
+      extend self
 
-      RECIPES =  Dir.glob(File.expand_path("../../../recipes/server/*.yaml", __FILE__)).collect do | f |
-        { name: f.gsub(".yaml","").gsub("recipes/server/",""), path: f }
+      def [](i)
+        recipes[i]
       end
 
-      def self.[](i)
-        RECIPES[i]
+      def list
+        recipes.keys
       end
 
-      def self.list
-        RECIPES.collect{|r| r[:name]}
+      def fetch name
+        recipes[name.to_sym]
+      end
+
+      def ask
+        puts "which recipe would you like to use? (type the index number)"
+        names = list
+        names.each_with_index{|r, i|  puts "#{i}: #{r}"}
+
+        index = gets.chomp
+
+        recipes[names[index.to_i]]
+      end
+
+      def recipes
+        @recipes ||= begin
+          recipes = YAML.load_file(File.expand_path("../../../../recipes/server.yaml", __FILE__))
+          recipes.merge!(YAML.load_file(File.expand_path('config/parker.yaml'))) if File.exists?(File.expand_path('config/parker.yaml'))
+
+          recipes
+        end
       end
     end
-
-  end   
+  end
 end
 
 

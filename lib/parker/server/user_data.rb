@@ -1,7 +1,7 @@
 module Parker
 
  def self._load(name)
-   load File.join("user_data", "#{name}.rb")
+   load File.join(File.expand_path("../../../../user_data", __FILE__), "#{name}.rb")
  end
 
  def self.user_data(name, domain, host)

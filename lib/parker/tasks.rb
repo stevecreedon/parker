@@ -10,16 +10,50 @@ namespace :parker do
       puts Parker.connection.compute.servers.inspect
     end
 
+    desc "stops server by ip_address"
+    task :stop_with_ip_address, [:account, :ip_address] do |t, args|
+      raise 'No account given' unless args[:account]
+      raise 'No ip_address given' unless args[:ip_address]
+
+      Parker.connect! args[:account]
+
+      ARGV.shift
+
+      require 'parker/server/server'
+      Parker::Server.stop ip_address: args[:ip_address]
+    end
+
+    desc "starts/creates server for the supplied [account] and [recipe]"
+    task :start_or_create, [:account, :recipe] do |t, args|
+      raise 'No account given' unless args[:account]
+      raise 'No recipe given' unless args[:recipe]
+
+      Parker.connect! args[:account]
+
+      ARGV.shift
+
+      require 'parker/server/server'
+      Parker::Server.start_or_create args[:recipe]
+    end
+
     desc "starts servers for the supplied [account]"
     task :start, [:account] do |t, args|
       Parker.connect! args[:account]
-      require_relative 'server/start'
+
+      ARGV.shift
+
+      require 'parker/server/server'
+      Parker::Server.start
     end
 
-    desc "creates a new server for the supplied [account]"
-    task :create, [:account] do |t, args|
+    desc "creates a new server for the supplied [account] and recipe (optional)"
+    task :create, [ :account, :recipe ] do |t, args|
       Parker.connect! args[:account]
-      require_relative 'server/create'
+
+      ARGV.shift
+
+      require 'parker/server/server'
+      Parker::Server.create args[:recipe]
     end
 
   end

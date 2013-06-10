@@ -1,6 +1,7 @@
 module Parker
   module Server
     module Flavours
+      extend self
 
       FLAVOURS = [
         "t1.micro",
@@ -22,14 +23,21 @@ module Parker
         "hs1.8xlarge"
       ]
 
-      def self.list
+      def list
         FLAVOURS
       end
 
-      def self.[](index)
+      def [](index)
         FLAVOURS[index]
       end
 
+      def ask
+        puts "which flavour do you fancy ?"
+        list.each_with_index{|flavour, i|  puts "#{i}: #{flavour}"}
+        index = gets.chomp
+        
+        self[index.to_i]
+      end
     end
   end
 end

@@ -1,24 +1,19 @@
 module Parker
   module Servers
+    extend self
 
     @@servers = nil
 
-    def self.servers
-      @@servers ||= _servers
+    def servers
+      @@servers ||= Parker.connection.compute.servers
     end
 
-    def self.[](index)
+    def [](index)
       servers[index]
     end
 
-    def self.list
+    def list
       servers.collect{|server, i| server.tags["Name"] }
-    end
-
-    private
-
-    def self._servers
-      Parker.connection.compute.servers
     end
 
   end

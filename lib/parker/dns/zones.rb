@@ -1,25 +1,31 @@
 module Parker
   module Dns
     module Zones
+      extend self
   
       @@zones = nil
 
-      def self.zones
-        @@zones ||= _zones
+      def zones
+        @@zones ||= Parker.connection.dns.zones
       end
 
-      def self.[](index)
+      def [](index)
         zones[index]
       end
 
-      def self.list
+      def list
         zones.collect{|zone, i| zone.domain }
       end
 
-      private
+      def fetch name
+        zones.find { | zone | zone.domain == name }
+      end
 
-      def self._zones
-        Parker.connection.dns.zones
+      def ask
+        puts "Enter domain"
+        list.each_with_index{|name, i| puts "#{i} #{name}"}
+
+        self[gets.chomp.to_i]
       end
 
     end
