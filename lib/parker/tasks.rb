@@ -33,7 +33,7 @@ namespace :parker do
       ARGV.shift
 
       require 'parker/server/server'
-      Parker::Server.start_or_create args[:recipe], args[:count]
+      Parker::Server.start_or_create args[:recipe], args[:count].to_i
     end
 
     desc "starts servers for the supplied [account]"
