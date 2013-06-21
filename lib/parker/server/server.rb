@@ -16,7 +16,10 @@ module Parker
       recipe = Parker::Server::Recipes.fetch(recipe_name)
       raise 'No recipe found' unless recipe
 
-      servers = Parker::Servers.servers.select{|server, i| server.state == 'stopped' && server.tags["Name"] == recipe[:name] }
+      servers = []
+      Parker::Servers.servers.select{|server, i| server.state == 'stopped' && server.tags["Name"] == recipe[:name] }.each do | server |
+        servers << server
+      end
 
       if servers.size < count
         servers.each do | server |
