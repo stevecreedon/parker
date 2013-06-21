@@ -24,7 +24,7 @@ namespace :parker do
     end
 
     desc "starts/creates server for the supplied [account] and [recipe]"
-    task :start_or_create, [:account, :recipe] do |t, args|
+    task :start_or_create, [:account, :recipe, :count] do |t, args|
       raise 'No account given' unless args[:account]
       raise 'No recipe given' unless args[:recipe]
 
@@ -33,7 +33,7 @@ namespace :parker do
       ARGV.shift
 
       require 'parker/server/server'
-      Parker::Server.start_or_create args[:recipe]
+      Parker::Server.start_or_create args[:recipe], args[:count]
     end
 
     desc "starts servers for the supplied [account]"
@@ -77,7 +77,7 @@ namespace :parker do
       puts "Policies:"
       Parker.connection.auto_scale.policies.each do |policy|
         puts policy.inspect
-      end    
+      end
     end
 
     desc "create the autoscale group with the specified [account]"

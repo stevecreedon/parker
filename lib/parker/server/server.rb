@@ -9,18 +9,31 @@ module Parker
   module Server
     extend self
 
-    def start_or_create recipe_name
+    def start_or_create recipe_name, count = 1
+      count = 1 unless count
+      count = 1 if count < 1
+
       recipe = Parker::Server::Recipes.fetch(recipe_name)
       raise 'No recipe found' unless recipe
 
-      server = Parker::Servers.servers.find{|server, i| server.state == 'stopped' && server.tags["Name"] == recipe[:name] }
+      servers = Parker::Servers.servers.select{|server, i| server.state == 'stopped' && server.tags["Name"] == recipe[:name] }
 
-      if server
-        server.start
-        server.wait_for { ready? }
-      else
+      if servers.size < count
+        servers.each do | server |
+          server.start
+        end
+
         options = recipe[:server].merge(:tags => {"Name" => recipe[:host]})
-        server = Parker.connection.compute.servers.create(options)
+        (count - servers.size).times do
+          servers << Parker.connection.compute.servers.create(options)
+        end
+      else
+        servers[0,count].each do | server |
+          server.start
+        end
+      end
+
+      servers[0,count].each do | server |
         server.wait_for { print "."; ready? }
       end
     end
