@@ -4,6 +4,18 @@ namespace :parker do
 
   namespace :servers do
 
+    desc 'creates image'
+    task :create_image, [:account, :instance_id, :name, :description] do | t, args |
+      raise 'No account given'     unless args[:account]
+      raise 'No instance_id given' unless args[:instance_id]
+      raise 'No name given'        unless args[:name]
+      raise 'No description given' unless args[:description]
+
+      Parker.connect! args[:account]
+
+      Parker.connection.compute.create_image(args[:instance_id], args[:name], args[:description])
+    end
+
     desc "lists servers for the supplied [account]"
     task :list, [:account] do |t, args|
       Parker.connect! args[:account]
