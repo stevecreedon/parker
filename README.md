@@ -1,3 +1,9 @@
+# Modify instance attribute.
+
+## Change DeleteOnTermination attribute for the volume
+
+    Parker.connection.compute.modify_instance_attribute('i-37b57058', {'BlockDeviceMapping.2.DeviceName' => '/dev/sdf', 'BlockDeviceMapping.2.Ebs.DeleteOnTermination' => 'true'})
+
 # Parker
 
 TODO: Write a gem description
