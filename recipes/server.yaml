@@ -11,3 +11,7 @@
     :device: "/dev/sdf"
     :size: 100
     :type: "standard"
+  :verbose:        true
+  :send_user_data: true
+  :set_zone:       true
+
