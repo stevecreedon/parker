@@ -4,6 +4,7 @@ require 'parker/dns/recordset'
 require_relative 'recipes'
 require_relative 'flavours'
 require_relative 'servers'
+require_relative 'user_data'
 
 module Parker
   module Server
@@ -72,7 +73,8 @@ module Parker
     end
 
     def create recipe_name = nil
-      recipe = Parker::Server::Recipes.fetch(recipe_name) || Parker::Server::Recipes.ask
+      recipe   = Parker::Server::Recipes.fetch(recipe_name) if recipe_name
+      recipe ||= Parker::Server::Recipes.ask
 
       recipe[:server] ||= {}
 
