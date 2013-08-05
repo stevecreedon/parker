@@ -15,11 +15,9 @@ module Parker
   class Connection
     attr_accessor :account
 
-    CREDENTIALS = YAML.load_file(ENV['HOME']+'/.ssh/aws-credentials.yaml')
-
     def initialize(account)
-      raise "ERROR:  no credentials found in ~/.ss/aws-credentails.yaml for account #{account.inspect}" unless CREDENTIALS[account]
-      self.account = account  
+      self.account = account
+      raise "ERROR:  no credentials found in ~/.ss/aws-credentails.yaml for account #{account.inspect}" unless credentials
     end
 
     def compute
@@ -49,7 +47,8 @@ module Parker
     private
 
     def _credentials(account)
-      CREDENTIALS[account]
+      @credential_hash ||= YAML.load_file(ENV['HOME']+'/.ssh/aws-credentials.yaml')
+      @credential_hash[account]
     end 
 
   end
