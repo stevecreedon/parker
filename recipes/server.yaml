@@ -13,5 +13,23 @@
     :type: "standard"
   :verbose:        true
   :send_user_data: true
+  :repo: 'git://github.com/fragallia/puppet.git'
   :set_zone:       true
 
+:geocoder:
+  :name: geocoder
+
+  :server:
+    :image_id: 'ami-7539b41c'
+    :key_name: 'dan_turbo_seeder'
+    :groups: 'turboseeder'
+
+  :volume:
+    :delete_on_termination: false
+    :device: "/dev/sdf"
+    :size: 20
+    :type: "standard"
+  :verbose:        true
+  :send_user_data: true
+  :repo: 'git@github.com:wimdu/wimdu_puppet.git'
+  :set_zone:       true

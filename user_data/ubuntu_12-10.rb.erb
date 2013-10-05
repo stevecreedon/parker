@@ -1,4 +1,3 @@
-USER_DATA = <<USER_DATA
 #!/bin/bash
 
 exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
@@ -30,14 +29,14 @@ sudo mount /mnt/data
 
 echo "#!/usr/bin/env bash" >> $APPLY
 echo "rm -rf /tmp/puppet/" >> $APPLY
-echo "git clone --recursive git://github.com/fragallia/puppet.git /tmp/puppet" >>  $APPLY
+echo "git clone --recursive <%= options[:repo] %> /tmp/puppet" >>  $APPLY
 echo "sudo puppet apply /tmp/puppet/manifests/site.pp --modulepath=/tmp/puppet/modules/ -v" >> $APPLY
 
 chmod +x $APPLY
 sudo ln -s $APPLY /usr/bin/puppet-apply
 
-DOMAIN=__DOMAIN__
-HOSTNAME=__HOSTNAME__
+DOMAIN=<%= domain %>
+HOSTNAME=<%= host %>
 
 # Set the host name
 hostname $HOSTNAME
@@ -58,5 +57,3 @@ ff02::2 ip6-allrouters
 ff02::3 ip6-allhosts
 EOF
 
-sudo puppet-apply
-USER_DATA

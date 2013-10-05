@@ -101,7 +101,8 @@ module Parker
       puts options.inspect if recipe[:verbose]
 
       if recipe[:send_user_data].nil? || recipe[:send_user_data]
-        options[:user_data] = Parker.user_data("ubuntu_12-10", recipe[:domain], recipe[:host])
+        puts Parker.user_data("ubuntu_12-10", recipe[:domain], recipe[:host], repo: recipe[:repo]).inspect
+        options[:user_data] = Parker.user_data("ubuntu_12-10", recipe[:domain], recipe[:host], repo: recipe[:repo])
       end
 
       server = Parker.connection.compute.servers.create(options)
