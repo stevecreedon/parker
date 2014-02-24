@@ -5,9 +5,9 @@ exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 sudo apt-get -y update
 sudo apt-get -y install build-essential zlib1g-dev libssl-dev libreadline6-dev libyaml-dev git-core
 cd /tmp
-wget ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p392.tar.gz
-tar -xvzf ruby-1.9.3-p392.tar.gz
-cd ruby-1.9.3-p392/
+wget ftp://ftp.ruby-lang.org/pub/ruby/2.1/ruby-2.1.0.tar.gz
+tar -xvzf ruby-2.1.0.tar.gz
+cd ruby-2.1.0/
 ./configure --prefix=/usr/local
 make
 sudo make install
