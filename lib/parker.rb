@@ -11,7 +11,7 @@ module Parker
   extend self
 
   def root
-    File.expand_path('../', __FILE__)
+    @root_path ||= File.expand_path('../../', File.dirname(__FILE__))
   end
 
 end
