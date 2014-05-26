@@ -17,7 +17,7 @@ module Parker
 
     def initialize(account)
       self.account = account
-      raise "ERROR:  no credentials found in ~/.ss/aws-credentails.yaml for account #{account.inspect}" unless credentials
+      raise "ERROR:  no credentials found in ~/.ssh/aws-credentails.yaml for account #{account.inspect}" unless credentials
     end
 
     def compute
